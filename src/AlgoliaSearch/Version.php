@@ -31,15 +31,21 @@ class Version {
 
   public static function getValue() {
     if (!isset(self::$value)) {
-      $composerJson = file_get_contents(dirname(__FILE__) . "/../../composer.json");
-      if ($composerJson != false) {
-        $composer = json_decode($composerJson);
-        if ($composer != null) {
-          self::$value = $composer->version;
-          return self::$value;
-        }
-      }
-      self::$value = "N/A";
+      $vpath = dirname( __FILE__ ) . "/../../composer.json";
+	    if ( file_exists($vpath) ) {
+
+		    $composerJson = file_get_contents( $vpath );
+		    if ( $composerJson != FALSE ) {
+			    $composer = json_decode( $composerJson );
+			    if ( $composer != NULL ) {
+				    self::$value = $composer->version;
+
+				    return self::$value;
+			    }
+		    }
+	    }
+
+	    self::$value = "N/A";
     } else {
       return self::$value;
     }
